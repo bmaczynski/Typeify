@@ -6,6 +6,8 @@ const Main = () => {
   const [userInput, setUserInput] = useState("");
   const [words, setWords] = useState([]);
   const [wordCorrectness, setWordCorrectness] = useState({});
+  const [startTime, setStartTime] = useState(null);
+  const [wpm, setWpm] = useState(0);
 
   // Use function from WordList that scrambles words stored within an array.
   useEffect(() => {
@@ -15,11 +17,30 @@ const Main = () => {
     };
     fetchWords();
   }, []);
+  useEffect(() => {
+    if (startTime !== null) {
+      const intervalId = setInterval(() => {
+        const currentTime = new Date();
+        const timeDiffInMinutes = (currentTime - startTime) / 60000; // convert ms to minutes
+        const correctWordCount =
+          Object.values(wordCorrectness).filter(Boolean).length;
+        setWpm(Math.floor(correctWordCount / timeDiffInMinutes));
+      }, 1000); // update every second
 
+      return () => clearInterval(intervalId); // cleanup on unmount or when dependencies change
+    }
+  }, [startTime, wordCorrectness]);
   const handleInputChange = (e) => {
     const input = e.target.value;
     setUserInput(input);
   };
+
+  useEffect(() => {
+    if (startTime === null) {
+      setStartTime(new Date());
+    }
+  }, [userInput]);
+
 
   const handleKeyUp = (e) => {
     if (e.key === " ") {
@@ -38,7 +59,6 @@ const Main = () => {
   const renderWord = (word, index) => {
     const isCurrentWord = index === currentWordIndex;
     const isWordCorrect = wordCorrectness[index];
-
     return (
       <span
         key={index}
@@ -54,22 +74,19 @@ const Main = () => {
           let letterClass = "";
           if (isCurrentWord) {
             if (letterIndex <= userInput.length - 1) {
-              if (
-                letter.toLowerCase() === userInput[letterIndex].toLowerCase()
-              ) {
-                letterClass = "text-green-500 text-opacity-100";
+              if (letter.toLowerCase() === userInput[letterIndex]) {
+                letterClass = "text-emerald-500 text-opacity-100";
               } else {
                 letterClass = "text-red-500 text-opacity-100";
               }
             } else {
-              letterClass = "text-white text-opacity-50";
+              letterClass = "text-white text-opacity-90";
             }
           } else {
             if (wordCorrectness[index]) {
-              letterClass = "text-green-500 text-opacity-100";
+              letterClass = "text-emerald-500 text-opacity-100";
             }
           }
-
           return (
             <span key={letterIndex} className={letterClass}>
               {letter}
@@ -95,6 +112,10 @@ const Main = () => {
         onKeyUp={handleKeyUp}
         className="p-2.5 rounded-lg bg-white bg-opacity-20 text-white font-medium text-2xl tracking-wide outline-none"
       />
+      <div className="flex flex-col items-center p-5 rounded-lg text-white justify-center aspect-square">
+        <div className="font-extrabold text-6xl tracking-tight">{wpm}</div>
+        <div className="font-semibold text-sm tracking-wide">WPM</div>
+      </div>
     </div>
   );
 };
