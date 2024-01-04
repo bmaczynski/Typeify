@@ -99,8 +99,8 @@ const Main = () => {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen bg-neutral-900 gap-5">
-      <div className="flex flex-wrap p-5 max-w-3xl bg-neutral-800 rounded-lg select-none">
+    <div className="flex flex-col items-center min-h-screen bg-neutral-900 gap-5">
+      <div className="flex flex-wrap p-5 max-w-3xl mt-5 bg-neutral-800 rounded-lg select-none">
         {words.map((word, index) => renderWord(word, index))}
       </div>
 
@@ -112,7 +112,7 @@ const Main = () => {
         onKeyUp={handleKeyUp}
         className="p-2.5 rounded-lg bg-white bg-opacity-20 text-white font-medium text-2xl tracking-wide outline-none"
       />
-      <div className="flex flex-col items-center p-5 rounded-lg text-white justify-center aspect-square">
+      <div className="flex flex-col p-5 rounded-lg text-white justify-center">
         <div className="font-extrabold text-6xl tracking-tight">{wpm}</div>
         <div className="font-semibold text-sm tracking-wide">WPM</div>
       </div>
