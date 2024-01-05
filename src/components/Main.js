@@ -6,41 +6,20 @@ const Main = () => {
   const [userInput, setUserInput] = useState("");
   const [words, setWords] = useState([]);
   const [wordCorrectness, setWordCorrectness] = useState({});
-  const [startTime, setStartTime] = useState(null);
-  const [wpm, setWpm] = useState(0);
 
   // Use function from WordList that scrambles words stored within an array.
   useEffect(() => {
     const fetchWords = async () => {
-      const randomWords = await generateRandomWords(20);
+      const randomWords = await generateRandomWords(50);
       setWords(randomWords);
     };
     fetchWords();
   }, []);
-  useEffect(() => {
-    if (startTime !== null) {
-      const intervalId = setInterval(() => {
-        const currentTime = new Date();
-        const timeDiffInMinutes = (currentTime - startTime) / 60000; // convert ms to minutes
-        const correctWordCount =
-          Object.values(wordCorrectness).filter(Boolean).length;
-        setWpm(Math.floor(correctWordCount / timeDiffInMinutes));
-      }, 1000); // update every second
 
-      return () => clearInterval(intervalId); // cleanup on unmount or when dependencies change
-    }
-  }, [startTime, wordCorrectness]);
   const handleInputChange = (e) => {
     const input = e.target.value;
     setUserInput(input);
   };
-
-  useEffect(() => {
-    if (startTime === null) {
-      setStartTime(new Date());
-    }
-  }, [userInput]);
-
 
   const handleKeyUp = (e) => {
     if (e.key === " ") {
@@ -112,8 +91,8 @@ const Main = () => {
         onKeyUp={handleKeyUp}
         className="p-2.5 rounded-lg bg-white bg-opacity-20 text-white font-medium text-2xl tracking-wide outline-none"
       />
-      <div className="flex flex-col p-5 rounded-lg text-white justify-center">
-        <div className="font-extrabold text-6xl tracking-tight">{wpm}</div>
+      <div className="flex flex-col p-5 text-white items-center justify-center">
+        <div className="font-bold text-6xl tracking-tight">122</div>
         <div className="font-semibold text-sm tracking-wide">WPM</div>
       </div>
     </div>
