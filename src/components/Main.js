@@ -1,11 +1,14 @@
 import React, { useState, useEffect } from "react";
 import { generateRandomWords } from "./WordList";
+import Timer from "./Timer";
 
 const Main = () => {
   const [currentWordIndex, setCurrentWordIndex] = useState(0);
   const [userInput, setUserInput] = useState("");
   const [words, setWords] = useState([]);
   const [wordCorrectness, setWordCorrectness] = useState({});
+  const [isStarted, setIsStarted] = useState(false);
+ 
 
   // Use function from WordList that scrambles words stored within an array.
   useEffect(() => {
@@ -22,6 +25,9 @@ const Main = () => {
   };
 
   const handleKeyUp = (e) => {
+    if (!isStarted) {
+      setIsStarted(true);
+    }
     if (e.key === " ") {
       e.preventDefault();
       const isWordCorrect = userInput.trim() === words[currentWordIndex];
@@ -32,6 +38,15 @@ const Main = () => {
       setCurrentWordIndex((prevIndex) => prevIndex + 1);
       setUserInput(""); // Clear the input field
     }
+  };
+
+  const onTimeUp = () => {
+    const correctWordCount =
+      Object.values(wordCorrectness).filter(Boolean).length;
+    console.log(
+      "Time is up! You typed " + correctWordCount + " correct words."
+    );
+    console.log("Time is up!");
   };
 
   // Display words with function from WordList
@@ -77,6 +92,8 @@ const Main = () => {
     );
   };
 
+
+
   return (
     <div className="flex flex-col items-center min-h-screen bg-neutral-900 gap-5">
       <div className="flex flex-wrap p-5 max-w-3xl mt-5 bg-neutral-800 rounded-lg select-none">
@@ -91,10 +108,7 @@ const Main = () => {
         onKeyUp={handleKeyUp}
         className="p-2.5 rounded-lg bg-white bg-opacity-20 text-white font-medium text-2xl tracking-wide outline-none"
       />
-      <div className="flex flex-col p-5 text-white items-center justify-center">
-        <div className="font-bold text-6xl tracking-tight">122</div>
-        <div className="font-semibold text-sm tracking-wide">WPM</div>
-      </div>
+      <Timer onTimeUp={onTimeUp}  isStarted={isStarted} />
     </div>
   );
 };

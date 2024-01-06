@@ -6,7 +6,7 @@ const Nav = () => {
       <div className="flex w-full p-10 bg-neutral-900 text-white">
 
           <h1 className="flex mx-auto text-3xl mb-5 font-semibold tracking-tight select-none">
-            Typeify <span className="text-blue-500">.io</span>
+            Typeify <span className="text-teal-500">.io</span>
           </h1>
           <div className="max-w-screen-md mx-auto">
             <div className="gap-5 w-full flex">
