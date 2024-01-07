@@ -8,7 +8,7 @@ const Main = () => {
   const [words, setWords] = useState([]);
   const [wordCorrectness, setWordCorrectness] = useState({});
   const [isStarted, setIsStarted] = useState(false);
- 
+  const [wordCount, setWordCount] = useState(0);
 
   // Use function from WordList that scrambles words stored within an array.
   useEffect(() => {
@@ -31,6 +31,7 @@ const Main = () => {
     if (e.key === " ") {
       e.preventDefault();
       const isWordCorrect = userInput.trim() === words[currentWordIndex];
+      setWordCount((prevWordCount) => prevWordCount + 1);
       setWordCorrectness((prev) => ({
         ...prev,
         [currentWordIndex]: isWordCorrect,
@@ -92,8 +93,6 @@ const Main = () => {
     );
   };
 
-
-
   return (
     <div className="flex flex-col items-center min-h-screen bg-neutral-900 gap-5">
       <div className="flex flex-wrap p-5 max-w-3xl mt-5 bg-neutral-800 rounded-lg select-none">
@@ -108,7 +107,7 @@ const Main = () => {
         onKeyUp={handleKeyUp}
         className="p-2.5 rounded-lg bg-white bg-opacity-20 text-white font-medium text-2xl tracking-wide outline-none"
       />
-      <Timer onTimeUp={onTimeUp}  isStarted={isStarted} />
+      <Timer onTimeUp={onTimeUp} wordCount={wordCount} isStarted={isStarted} />
     </div>
   );
 };
