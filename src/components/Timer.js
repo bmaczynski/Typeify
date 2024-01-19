@@ -16,6 +16,8 @@ const Timer = ({ onTimeUp, wordCount, isStarted }) => {
     return () => clearInterval(timerRef.current);
   }, [isStarted]);
 
+  
+
   useEffect(() => {
     if (seconds === 0) {
       onTimeUp();
