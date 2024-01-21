@@ -9,6 +9,7 @@ const Main = () => {
   const [wordCorrectness, setWordCorrectness] = useState({});
   const [isStarted, setIsStarted] = useState(false);
   const [wordCount, setWordCount] = useState(0);
+  const [isTimeUp, setIsTimeUp] = useState(false);
 
   // Use function from WordList that scrambles words stored within an array.
   useEffect(() => {
@@ -41,13 +42,11 @@ const Main = () => {
     }
   };
 
+  const correctWordCount =
+    Object.values(wordCorrectness).filter(Boolean).length;
+
   const onTimeUp = () => {
-    const correctWordCount =
-      Object.values(wordCorrectness).filter(Boolean).length;
-    console.log(
-      "Time is up! You typed " + correctWordCount + " correct words."
-    );
-    console.log("Time is up!");
+    setIsTimeUp(true);
   };
 
   // Display words with function from WordList
@@ -105,9 +104,15 @@ const Main = () => {
         value={userInput}
         onChange={handleInputChange}
         onKeyUp={handleKeyUp}
+        disabled={isTimeUp}
         className="p-2.5 rounded-lg bg-white bg-opacity-20 text-white font-medium text-2xl tracking-wide outline-none"
       />
       <Timer onTimeUp={onTimeUp} wordCount={wordCount} isStarted={isStarted} />
+      {isTimeUp && (
+        <div className="text-white text-2xl">
+          Time is up! You've typed {correctWordCount} correct words!
+        </div>
+      )}
     </div>
   );
 };

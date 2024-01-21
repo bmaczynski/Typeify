@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 
 const Timer = ({ onTimeUp, wordCount, isStarted }) => {
-  const [seconds, setSeconds] = useState(30);
+  const [seconds, setSeconds] = useState(3);
   const [wpm, setWpm] = useState(0);
   const timerRef = useRef();
 
@@ -16,7 +16,6 @@ const Timer = ({ onTimeUp, wordCount, isStarted }) => {
     return () => clearInterval(timerRef.current);
   }, [isStarted]);
 
-  
 
   useEffect(() => {
     if (seconds === 0) {
