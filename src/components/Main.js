@@ -110,7 +110,10 @@ const Main = () => {
       <Timer onTimeUp={onTimeUp} wordCount={wordCount} isStarted={isStarted} />
       {isTimeUp && (
         <div className="text-white text-2xl">
-          Time is up! You've typed {correctWordCount} correct words!
+          <span className="text-emerald-500 font-extrabold text-6xl flex justify-center w-full">
+            {correctWordCount}
+          </span>
+          correct words
         </div>
       )}
     </div>
