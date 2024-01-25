@@ -42,9 +42,6 @@ const Main = () => {
     }
   };
 
-  const correctWordCount =
-    Object.values(wordCorrectness).filter(Boolean).length;
-
   const onTimeUp = () => {
     setIsTimeUp(true);
   };
@@ -108,14 +105,6 @@ const Main = () => {
         className="p-2.5 rounded-lg bg-white bg-opacity-20 text-white font-medium text-2xl tracking-wide outline-none"
       />
       <Timer onTimeUp={onTimeUp} wordCount={wordCount} isStarted={isStarted} />
-      {isTimeUp && (
-        <div className="text-white text-2xl">
-          <span className="text-emerald-500 font-extrabold text-6xl flex justify-center w-full">
-            {correctWordCount}
-          </span>
-          correct words
-        </div>
-      )}
     </div>
   );
 };
