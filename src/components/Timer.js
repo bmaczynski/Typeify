@@ -1,9 +1,39 @@
 import React, { useState, useEffect, useRef } from "react";
 
-const Timer = ({ onTimeUp, wordCount, isStarted }) => {
+const Timer = ({
+  onTimeUp,
+  wordCount,
+  isStarted,
+  setCurrentWordIndex,
+  setWordCorrectness,
+  setUserInput,
+  setIsStarted,
+  setWordCount,
+  setIsTimeUp,
+  setReset,
+}) => {
   const [seconds, setSeconds] = useState(30);
   const [wpm, setWpm] = useState(0);
   const timerRef = useRef();
+
+  const handleReset = () => {
+    setCurrentWordIndex(0);
+    setUserInput("");
+    setWordCorrectness({});
+    setIsStarted(false);
+    setWordCount(0);
+    setSeconds(30);
+    setIsTimeUp(false);
+    setReset(true);
+  };
+
+  useEffect(() => {
+    if (seconds === 0) {
+      onTimeUp();
+      clearInterval(timerRef.current);
+    }
+    setWpm(Math.floor((wordCount / (30 - seconds)) * 60 || 0));
+  }, [seconds, wordCount, onTimeUp]);
 
   useEffect(() => {
     if (isStarted) {
@@ -15,28 +45,27 @@ const Timer = ({ onTimeUp, wordCount, isStarted }) => {
     }
     return () => clearInterval(timerRef.current);
   }, [isStarted]);
-
-  useEffect(() => {
-    if (seconds === 0) {
-      onTimeUp();
-      clearInterval(timerRef.current);
-    }
-    setWpm(Math.floor((wordCount / (30 - seconds)) * 60 || 0));
-  }, [seconds, wordCount, onTimeUp]);
-
   return (
-    <div className="flex gap-5 p-5 text-white items-center justify-center">
-      <div className="flex flex-col items-center">
-        <span className="text-emerald-500 font-extrabold text-4xl">
-          {seconds}
-        </span>
-        seconds
+    <>
+      <div className="flex gap-5 p-5 text-white items-center justify-center">
+        <div className="flex flex-col items-center">
+          <span className="font-extrabold text-4xl">{seconds}</span>
+          seconds
+        </div>
+        <div className="flex flex-col items-center">
+          <span className="font-extrabold text-4xl">{wpm}</span>
+          wpm
+        </div>
       </div>
-      <div className="flex flex-col items-center">
-        <span className="text-emerald-500 font-extrabold text-4xl">{wpm}</span>
-        wpm
+      <div className="flex">
+        <button
+          className="text-white p-2.5 bg-neutral-800 rounded-md hover:bg-opacity-80 transition-all duration-200 text-xl"
+          onClick={handleReset}
+        >
+          Reset
+        </button>
       </div>
-    </div>
+    </>
   );
 };
 
