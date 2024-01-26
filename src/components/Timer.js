@@ -1,31 +1,9 @@
 import React, { useState, useEffect, useRef } from "react";
 
-const Timer = ({
-  onTimeUp,
-  wordCount,
-  isStarted,
-  setCurrentWordIndex,
-  setWordCorrectness,
-  setUserInput,
-  setIsStarted,
-  setWordCount,
-  setIsTimeUp,
-  setReset,
-}) => {
+const Timer = ({ wordCount, isStarted, onTimeUp }) => {
   const [seconds, setSeconds] = useState(30);
   const [wpm, setWpm] = useState(0);
   const timerRef = useRef();
-
-  const handleReset = () => {
-    setCurrentWordIndex(0);
-    setUserInput("");
-    setWordCorrectness({});
-    setIsStarted(false);
-    setWordCount(0);
-    setSeconds(30);
-    setIsTimeUp(false);
-    setReset(true);
-  };
 
   useEffect(() => {
     if (seconds === 0) {
@@ -33,7 +11,7 @@ const Timer = ({
       clearInterval(timerRef.current);
     }
     setWpm(Math.floor((wordCount / (30 - seconds)) * 60 || 0));
-  }, [seconds, wordCount, onTimeUp]);
+  }, [seconds, wordCount]);
 
   useEffect(() => {
     if (isStarted) {
@@ -60,7 +38,7 @@ const Timer = ({
       <div className="flex">
         <button
           className="text-white p-2.5 bg-neutral-800 rounded-md hover:bg-opacity-80 transition-all duration-200 text-xl"
-          onClick={handleReset}
+          onClick={() => window.location.reload()}
         >
           Reset
         </button>

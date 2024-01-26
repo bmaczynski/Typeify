@@ -10,7 +10,6 @@ const Main = () => {
   const [isStarted, setIsStarted] = useState(false);
   const [wordCount, setWordCount] = useState(0);
   const [isTimeUp, setIsTimeUp] = useState(false);
-  const [reset, setReset] = useState(false);
 
   // Use function from WordList that scrambles words stored within an array.
   useEffect(() => {
@@ -105,18 +104,7 @@ const Main = () => {
         disabled={isTimeUp}
         className="p-2.5 rounded-lg bg-white bg-opacity-20 text-white font-medium text-2xl tracking-wide outline-none"
       />
-      <Timer
-        wordCount={wordCount}
-        onTimeUp={onTimeUp}
-        setCurrentWordIndex={setCurrentWordIndex}
-        setUserInput={setUserInput}
-        setWordCorrectness={setWordCorrectness}
-        setIsStarted={setIsStarted}
-        setWordCount={setWordCount}
-        setIsTimeUp={setIsTimeUp}
-        setReset={setReset}
-        isStarted={isStarted}
-      />
+      <Timer onTimeUp={onTimeUp} wordCount={wordCount} isStarted={isStarted} />
     </div>
   );
 };
