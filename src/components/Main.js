@@ -104,7 +104,7 @@ const Main = () => {
         disabled={isTimeUp}
         className="p-2.5 rounded-lg bg-white bg-opacity-20 text-white font-medium text-2xl tracking-wide outline-none"
       />
-      <Timer onTimeUp={onTimeUp} wordCount={wordCount} isStarted={isStarted} />
+      <Timer onTimeUp={onTimeUp¸} wordCount={wordCount} isStarted={isStarted} />
     </div>
   );
 };
