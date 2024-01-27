@@ -40,6 +40,9 @@ const Main = () => {
       setCurrentWordIndex((prevIndex) => prevIndex + 1);
       setUserInput(""); // Clear the input field
     }
+    if (wordRefs[currentWordIndex].current) {
+      wordRefs[currentWordIndex].current.scrollIntoView({ behavior: "smooth" });
+    }
   };
 
   const onTimeUp = () => {
@@ -88,10 +91,12 @@ const Main = () => {
       </span>
     );
   };
-
+  const wordRefs = words.map(() => React.createRef());
   return (
+    // This is where you should declare css to create a scrollIntoView
+    // Do this only when overflow-x is going to happen, I believe
     <div className="flex flex-col items-center min-h-screen bg-neutral-900 gap-5">
-      <div className="flex flex-wrap p-5 max-w-3xl mt-5 bg-neutral-800 rounded-lg select-none">
+      <div className="flex flex-wrap p-5 overflow-hidden max-w-3xl mt-5 bg-neutral-800 rounded-lg select-none">
         {words.map((word, index) => renderWord(word, index))}
       </div>
 
