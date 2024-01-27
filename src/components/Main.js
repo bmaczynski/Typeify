@@ -25,7 +25,7 @@ const Main = () => {
     setUserInput(input);
   };
 
-  const handleKeyUp = (e) => {
+  const handleKeyDown = (e) => {
     if (!isStarted) {
       setIsStarted(true);
     }
@@ -42,6 +42,7 @@ const Main = () => {
     }
   };
 
+  
   const onTimeUp = () => {
     setIsTimeUp(true);
   };
@@ -100,7 +101,7 @@ const Main = () => {
         type="text"
         value={userInput}
         onChange={handleInputChange}
-        onKeyUp={handleKeyUp}
+        onKeyDown={handleKeyDown}
         disabled={isTimeUp}
         className="p-2.5 rounded-lg bg-white bg-opacity-20 text-white font-medium text-2xl tracking-wide outline-none"
       />
