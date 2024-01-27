@@ -42,7 +42,6 @@ const Main = () => {
     }
   };
 
-  
   const onTimeUp = () => {
     setIsTimeUp(true);
   };
