@@ -35,9 +35,6 @@ const Nav = () => {
             >
               Discord
             </button>
-            <button className="hover:bg-neutral-800 rounded-md p-2.5 transition-all">
-              Contact
-            </button>
           </div>
         </div>
       </div>
