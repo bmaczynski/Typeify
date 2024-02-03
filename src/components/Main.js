@@ -56,7 +56,7 @@ const Main = () => {
     return (
       <span
         key={index}
-        className={`text-3xl font-medium ${
+        className={`text-xl md:text-3xl font-medium ${
           isWordCorrect === false
             ? "text-red-500"
             : isWordCorrect
@@ -93,10 +93,8 @@ const Main = () => {
   };
   const wordRefs = words.map(() => React.createRef());
   return (
-    // This is where you should declare css to create a scrollIntoView
-    // Do this only when overflow-x is going to happen, I believe
-    <div className="flex flex-col items-center gap-5">
-      <div className="flex flex-wrap p-5 overflow-hidden max-w-3xl mt-5 bg-neutral-800 rounded-lg select-none">
+    <div className="flex flex-col items-center gap-2.5 md:gap-5">
+      <div className="flex flex-wrap p-5 overflow-hidden mt-5 bg-neutral-800 rounded-lg select-none">
         {words.map((word, index) => renderWord(word, index))}
       </div>
 
@@ -107,7 +105,7 @@ const Main = () => {
         onChange={handleInputChange}
         onKeyDown={handleKeyDown}
         disabled={isTimeUp}
-        className="p-2.5 rounded-lg bg-white bg-opacity-20 text-white font-medium text-2xl tracking-wide outline-none"
+        className="p-2.5 rounded-lg bg-white bg-opacity-20 text-white font-medium text-xl md:text-2xl tracking-wide outline-none"
       />
       <Timer onTimeUp={onTimeUp} wordCount={wordCount} isStarted={isStarted} />
     </div>

@@ -25,24 +25,22 @@ const Timer = ({ wordCount, isStarted, onTimeUp }) => {
   }, [isStarted]);
   return (
     <>
-      <div className="flex gap-5 p-5 text-white items-center justify-center">
+      <div className="flex gap-2.5 md:gap-5 md:p-5 text-white items-center justify-center">
         <div className="flex flex-col items-center">
-          <span className="font-extrabold text-4xl">{seconds}</span>
+          <span className="font-extrabold text-2xl md:text-4xl">{seconds}</span>
           seconds
         </div>
         <div className="flex flex-col items-center">
-          <span className="font-extrabold text-4xl">{wpm}</span>
+          <span className="font-extrabold text-2xl md:text-4xl">{wpm}</span>
           wpm
         </div>
       </div>
-      <div className="flex">
-        <button
-          className="text-white p-2.5 bg-neutral-800 rounded-md hover:bg-opacity-80 transition-all duration-200 text-xl"
-          onClick={() => window.location.reload()}
-        >
-          Reset
-        </button>
-      </div>
+      <button
+        className="flex text-white p-2.5 bg-neutral-800 rounded-md transition-all duration-200 text-sm md:text-xl"
+        onClick={() => window.location.reload()}
+      >
+        Reset
+      </button>
     </>
   );
 };

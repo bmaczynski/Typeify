@@ -7,8 +7,8 @@ import About from "./components/About";
 
 function App() {
   return (
-    <div className="w-full flex flex-col items-center min-h-screen bg-neutral-900">
-      <div className="flex flex-col md:max-w-screen-md max-w-screen-sm">
+    <div className="w-full flex flex-col items-center h-screen overflow-hidden md:min-h-screen bg-neutral-900">
+      <div className="flex flex-col max-w-sm md:max-w-2xl">
         <Router>
           <Nav />
           <Routes>

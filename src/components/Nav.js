@@ -4,11 +4,11 @@ import { Link } from "react-router-dom";
 const Nav = () => {
   return (
     <>
-      <div className="flex w-full items-center p-5 bg-neutral-900 text-white">
-        <h1 className="flex w-full text-3xl mb-5 font-semibold tracking-tight select-none">
+      <div className="flex flex-col md:flex-row w-full items-center bg-neutral-900 text-white p-5">
+        <h1 className="flex justify-center md:justify-normal w-full text-3xl font-bold tracking-tight ">
           Typeify <span className="text-teal-500">.io</span>
         </h1>
-        <div className="gap-5 w-full flex justify-center">
+        <div className="gap-5 font-semibold w-full flex justify-center md:justify-end">
           <Link
             className="p-2.5 hover:bg-neutral-800 rounded-md transition-all"
             to="/"
