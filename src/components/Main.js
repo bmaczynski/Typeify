@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { generateRandomWords } from "./WordList";
 import Timer from "./Timer";
+import { IoMdRefresh } from "react-icons/io";
 
 const Main = () => {
   const [currentWordIndex, setCurrentWordIndex] = useState(0);
@@ -10,13 +11,14 @@ const Main = () => {
   const [isStarted, setIsStarted] = useState(false);
   const [wordCount, setWordCount] = useState(0);
   const [isTimeUp, setIsTimeUp] = useState(false);
+  const [seconds, setSeconds] = useState(10);
 
-  // Use function from WordList that scrambles words stored within an array.
+  const fetchWords = async () => {
+    const randomWords = await generateRandomWords(50);
+    setWords(randomWords);
+  };
+
   useEffect(() => {
-    const fetchWords = async () => {
-      const randomWords = await generateRandomWords(50);
-      setWords(randomWords);
-    };
     fetchWords();
   }, []);
 
@@ -54,16 +56,7 @@ const Main = () => {
     const isCurrentWord = index === currentWordIndex;
     const isWordCorrect = wordCorrectness[index];
     return (
-      <span
-        key={index}
-        className={`text-xl md:text-3xl font-medium ${
-          isWordCorrect === false
-            ? "text-red-500"
-            : isWordCorrect
-            ? "text-black"
-            : "text-white text-opacity-50"
-        }`}
-      >
+      <span key={index} className={`text-xl md:text-3xl font-medium ${isWordCorrect === false ? "text-red-500" : isWordCorrect ? "text-black" : "text-white text-opacity-50"}`}>
         {word.split("").map((letter, letterIndex) => {
           let letterClass = "";
           if (isCurrentWord) {
@@ -92,22 +85,40 @@ const Main = () => {
     );
   };
   const wordRefs = words.map(() => React.createRef());
+
   return (
-    <div className="flex flex-col items-center gap-2.5 md:gap-5">
-      <div className="flex flex-wrap p-5 overflow-hidden mt-5 bg-neutral-800 rounded-lg select-none">
-        {words.map((word, index) => renderWord(word, index))}
-      </div>
+    <div className="flex flex-col items-center gap-2.5 container">
+      <div className="flex flex-wrap px-10 py-7 overflow-hidden bg-white/5 border border-white/10 rounded-md select-none">{words.map((word, index) => renderWord(word, index))}</div>
 
       {/* User input to type out current word. */}
-      <input
-        type="text"
-        value={userInput}
-        onChange={handleInputChange}
-        onKeyDown={handleKeyDown}
-        disabled={isTimeUp}
-        className="p-2.5 rounded-lg bg-white bg-opacity-20 text-white font-medium text-xl md:text-2xl tracking-wide outline-none"
-      />
-      <Timer onTimeUp={onTimeUp} wordCount={wordCount} isStarted={isStarted} />
+      <div className="flex gap-2.5 w-full">
+        <input
+          type="text"
+          value={userInput}
+          onChange={handleInputChange}
+          onKeyDown={handleKeyDown}
+          disabled={isTimeUp}
+          className="px-5 py-2.5 bg-white/5 border-white/10 rounded-md border focus:border-teal-500 text-lg text-white !outline-none placeholder-neutral-500 w-full"
+          placeholder="Start typing..."
+        />
+
+        <button
+          onClick={() => {
+            setCurrentWordIndex(0);
+            setUserInput("");
+            setWordCorrectness({});
+            setIsStarted(false);
+            setWordCount(0);
+            setIsTimeUp(false);
+            setSeconds(10);
+            fetchWords();
+          }}
+          className="h-[50px] aspect-square flex items-center justify-center bg-white/5 border border-white/10 rounded-md text-lg text-white font-semibold transition hover:bg-white/10 shrink-0"
+        >
+          <IoMdRefresh />
+        </button>
+      </div>
+      <Timer seconds={seconds} setSeconds={setSeconds} onTimeUp={onTimeUp} wordCount={wordCount} isStarted={isStarted} />
     </div>
   );
 };

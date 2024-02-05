@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 
-const Timer = ({ wordCount, isStarted, onTimeUp }) => {
-  const [seconds, setSeconds] = useState(10);
+const Timer = ({ wordCount, isStarted, onTimeUp, seconds, setSeconds }) => {
   const [wpm, setWpm] = useState(0);
   const timerRef = useRef();
 
@@ -35,12 +34,6 @@ const Timer = ({ wordCount, isStarted, onTimeUp }) => {
           wpm
         </div>
       </div>
-      <button
-        className="flex text-white p-2.5 bg-neutral-800 rounded-md transition-all duration-200 text-sm md:text-xl"
-        onClick={() => window.location.reload()}
-      >
-        Reset
-      </button>
     </>
   );
 };

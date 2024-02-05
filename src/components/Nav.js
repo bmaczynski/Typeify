@@ -1,38 +1,33 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 
 const Nav = () => {
+  const navLinks = [
+    { path: "/", text: "Home" },
+    { path: "/about", text: "About" },
+    { path: "https://discord.gg/U3eCyK6SGF", text: "Discord" },
+  ];
+
+  const location = useLocation();
+
   return (
     <>
-      <div className="flex flex-col md:flex-row w-full items-center bg-neutral-900 text-white p-5">
-        <h1 className="flex justify-center md:justify-normal w-full text-3xl font-bold tracking-tight ">
-          Typeify <span className="text-teal-500">.io</span>
-        </h1>
-        <div className="gap-5 font-semibold w-full flex justify-center md:justify-end">
-          <Link
-            className="p-2.5 hover:bg-neutral-800 rounded-md transition-all"
-            to="/"
-          >
-            Home
-          </Link>
-
-          <Link
-            className="p-2.5 hover:bg-neutral-800 rounded-md transition-all"
-            to="/about"
-          >
-            About
-          </Link>
-          <a
-            className="hover:bg-neutral-800 rounded-md p-2.5 transition-all"
-            href="https://discord.gg/U3eCyK6SGF"
-            target="_blank"
-            rel="noreferrer"
-          >
-            Discord
-          </a>
+      <div className="text-white bg-white/5 border-b border-white/10 p-5 mb-5">
+        <div className="flex flex-col lg:flex-row justify-between items-center container">
+          <h1 className="flex text-3xl font-bold tracking-tight">
+            Typeify <span className="text-teal-500">.io</span>
+          </h1>
+          <div className="gap-1 font-semibold flex mt-5">
+            {navLinks.map((link, index) => (
+              <Link key={index} className={`px-5 py-2.5 rounded-full font-medium transition ${location.pathname === link.path ? "bg-white/5" : "hover:bg-white/5 bg-transparent "}`} to={link.path}>
+                {link.text}
+              </Link>
+            ))}
+          </div>
         </div>
       </div>
     </>
   );
 };
+
 export default Nav;
