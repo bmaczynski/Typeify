@@ -22,15 +22,14 @@ const Nav = () => {
           >
             About
           </Link>
-          <button
+          <a
             className="hover:bg-neutral-800 rounded-md p-2.5 transition-all"
-            type="button"
-            onClick={() => {
-              window.open("https://discord.gg/U3eCyK6SGF", "_blank");
-            }}
+            href="https://discord.gg/U3eCyK6SGF"
+            target="_blank"
+            rel="noreferrer"
           >
             Discord
-          </button>
+          </a>
         </div>
       </div>
     </>
