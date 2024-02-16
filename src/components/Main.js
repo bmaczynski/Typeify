@@ -16,8 +16,8 @@ const Main = () => {
   const [wpm, setWpm] = useState(0);
   const selectedTime = useRef(10);
 
-  const fetchWords = async () => {
-    const randomWords = await generateRandomWords(50);
+  const fetchWords = async (numWords = 50) => {
+    const randomWords = await generateRandomWords(numWords);
     setWords(randomWords);
   };
 
@@ -124,6 +124,7 @@ const Main = () => {
           className="h-[50px] aspect-square items-center justify-center bg-white/5 border border-white/10 rounded-md text-white font-semibold transition hover:bg-white/10 shrink-0"
           onClick={() => {
             setSeconds(10);
+            fetchWords(50);
             selectedTime.current = 10;
           }}
         >
@@ -133,7 +134,7 @@ const Main = () => {
           className="h-[50px] aspect-square items-center justify-center bg-white/5 border border-white/10 rounded-md text-white font-semibold transition hover:bg-white/10 shrink-0"
           onClick={() => {
             setSeconds(30);
-
+            fetchWords(100);
             selectedTime.current = 30;
           }}
         >
