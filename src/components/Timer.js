@@ -1,7 +1,13 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useEffect, useRef } from "react";
 
-const Timer = ({ wordCount, isStarted, onTimeUp, seconds, setSeconds }) => {
-  const [wpm, setWpm] = useState(0);
+const Timer = ({
+  isStarted,
+  onTimeUp,
+  seconds,
+  setSeconds,
+  setWordCount,
+  wpm,
+}) => {
   const timerRef = useRef();
 
   useEffect(() => {
@@ -9,8 +15,7 @@ const Timer = ({ wordCount, isStarted, onTimeUp, seconds, setSeconds }) => {
       onTimeUp();
       clearInterval(timerRef.current);
     }
-    setWpm(Math.floor((wordCount / (10 - seconds)) * 60 || 0));
-  }, [seconds, wordCount]);
+  }, [seconds]);
 
   useEffect(() => {
     if (isStarted) {
@@ -22,6 +27,11 @@ const Timer = ({ wordCount, isStarted, onTimeUp, seconds, setSeconds }) => {
     }
     return () => clearInterval(timerRef.current);
   }, [isStarted]);
+
+  useEffect(() => {
+    setWordCount(0);
+  }, [seconds]);
+
   return (
     <>
       <div className="flex gap-2.5 md:gap-5 md:p-5 text-white items-center justify-center">

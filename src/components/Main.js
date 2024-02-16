@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { generateRandomWords } from "./WordList";
 import Timer from "./Timer";
 import { IoMdRefresh } from "react-icons/io";
@@ -12,6 +12,9 @@ const Main = () => {
   const [wordCount, setWordCount] = useState(0);
   const [isTimeUp, setIsTimeUp] = useState(false);
   const [seconds, setSeconds] = useState(10);
+  const [startTime, setStartTime] = useState(Date.now());
+  const [wpm, setWpm] = useState(0);
+  const selectedTime = useRef(10);
 
   const fetchWords = async () => {
     const randomWords = await generateRandomWords(50);
@@ -30,17 +33,21 @@ const Main = () => {
   const handleKeyDown = (e) => {
     if (!isStarted) {
       setIsStarted(true);
+      setStartTime(Date.now());
     }
     if (e.key === " ") {
       e.preventDefault();
       const isWordCorrect = userInput.trim() === words[currentWordIndex];
-      setWordCount((prevWordCount) => prevWordCount + 1);
       setWordCorrectness((prev) => ({
         ...prev,
         [currentWordIndex]: isWordCorrect,
       }));
       setCurrentWordIndex((prevIndex) => prevIndex + 1);
-      setUserInput(""); // Clear the input field
+      setUserInput("");
+
+      // Calculate WPM
+      let timeElapsedInMinutes = (Date.now() - startTime) / 60000;
+      setWpm(Math.floor((currentWordIndex + 1) / timeElapsedInMinutes));
     }
     if (wordRefs[currentWordIndex].current) {
       wordRefs[currentWordIndex].current.scrollIntoView({ behavior: "smooth" });
@@ -49,6 +56,7 @@ const Main = () => {
 
   const onTimeUp = () => {
     setIsTimeUp(true);
+    setWordCount(currentWordIndex); // Update wordCount when time is up
   };
 
   // Display words with function from WordList
@@ -112,7 +120,25 @@ const Main = () => {
           className="px-5 py-2.5 bg-white/5 border-white/10 rounded-md border focus:border-teal-500 text-lg text-white !outline-none placeholder-neutral-500 w-full"
           placeholder="Start typing..."
         />
+        <button
+          className="h-[50px] aspect-square items-center justify-center bg-white/5 border border-white/10 rounded-md text-white font-semibold transition hover:bg-white/10 shrink-0"
+          onClick={() => {
+            setSeconds(10);
+            selectedTime.current = 10;
+          }}
+        >
+          10s
+        </button>
+        <button
+          className="h-[50px] aspect-square items-center justify-center bg-white/5 border border-white/10 rounded-md text-white font-semibold transition hover:bg-white/10 shrink-0"
+          onClick={() => {
+            setSeconds(30);
 
+            selectedTime.current = 30;
+          }}
+        >
+          30s
+        </button>
         <button
           onClick={() => {
             setCurrentWordIndex(0);
@@ -121,7 +147,8 @@ const Main = () => {
             setIsStarted(false);
             setWordCount(0);
             setIsTimeUp(false);
-            setSeconds(10);
+            setSeconds(selectedTime.current);
+            setWpm(0);
             fetchWords();
           }}
           className="h-[50px] aspect-square flex items-center justify-center bg-white/5 border border-white/10 rounded-md text-lg text-white font-semibold transition hover:bg-white/10 shrink-0"
@@ -135,6 +162,9 @@ const Main = () => {
         onTimeUp={onTimeUp}
         wordCount={wordCount}
         isStarted={isStarted}
+        setWordCount={setWordCount}
+        wpm={wpm}
+        setWpm={setWpm}
       />
     </div>
   );
