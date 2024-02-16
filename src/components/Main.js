@@ -15,6 +15,7 @@ const Main = () => {
   const [startTime, setStartTime] = useState(Date.now());
   const [wpm, setWpm] = useState(0);
   const selectedTime = useRef(10);
+  const selectedWords = useRef(50);
 
   const fetchWords = async (numWords = 50) => {
     const randomWords = await generateRandomWords(numWords);
@@ -126,6 +127,7 @@ const Main = () => {
             setSeconds(10);
             fetchWords(50);
             selectedTime.current = 10;
+            selectedWords.current = 50;
           }}
         >
           10s
@@ -136,6 +138,7 @@ const Main = () => {
             setSeconds(30);
             fetchWords(100);
             selectedTime.current = 30;
+            selectedWords.current = 100;
           }}
         >
           30s
@@ -150,7 +153,7 @@ const Main = () => {
             setIsTimeUp(false);
             setSeconds(selectedTime.current);
             setWpm(0);
-            fetchWords();
+            fetchWords(selectedWords.current);
           }}
           className="h-[50px] aspect-square flex items-center justify-center bg-white/5 border border-white/10 rounded-md text-lg text-white font-semibold transition hover:bg-white/10 shrink-0"
         >
