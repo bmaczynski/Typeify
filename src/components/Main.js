@@ -124,7 +124,7 @@ const Main = () => {
           className="h-[50px] aspect-square items-center justify-center bg-white/5 border border-white/10 rounded-md text-white font-semibold transition hover:bg-white/10 shrink-0"
           onClick={() => {
             setSeconds(10);
-            fetchWords(50);
+            fetchWords(50); 
             selectedTime.current = 10;
           }}
         >
