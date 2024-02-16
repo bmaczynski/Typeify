@@ -143,6 +143,7 @@ const Main = () => {
         >
           30s
         </button>
+
         <button
           onClick={() => {
             setCurrentWordIndex(0);

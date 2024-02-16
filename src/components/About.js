@@ -9,7 +9,7 @@ function About() {
           harum dolor. Facilis dolor alias sed nesciunt totam eveniet officiis
           autem nostrum quia, explicabo ratione illum numquam sit maiores
           tempora facere, quasi quis ullam tenetur omnis ex quos sint veritatis
-          earum. Expedita!
+          earum. Expedita! :D
         </div>
       </div>
     </div>
