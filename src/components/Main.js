@@ -56,7 +56,16 @@ const Main = () => {
     const isCurrentWord = index === currentWordIndex;
     const isWordCorrect = wordCorrectness[index];
     return (
-      <span key={index} className={`text-xl md:text-3xl font-medium ${isWordCorrect === false ? "text-red-500" : isWordCorrect ? "text-black" : "text-white text-opacity-50"}`}>
+      <span
+        key={index}
+        className={`text-xl md:text-3xl font-medium ${
+          isWordCorrect === false
+            ? "text-red-500"
+            : isWordCorrect
+            ? "text-black"
+            : "text-white text-opacity-50"
+        }`}
+      >
         {word.split("").map((letter, letterIndex) => {
           let letterClass = "";
           if (isCurrentWord) {
@@ -88,7 +97,9 @@ const Main = () => {
 
   return (
     <div className="flex flex-col items-center gap-2.5 container">
-      <div className="flex flex-wrap px-10 py-7 overflow-hidden bg-white/5 border border-white/10 rounded-md select-none">{words.map((word, index) => renderWord(word, index))}</div>
+      <div className="flex flex-wrap px-10 py-7 overflow-hidden bg-white/5 border border-white/10 rounded-md select-none">
+        {words.map((word, index) => renderWord(word, index))}
+      </div>
 
       {/* User input to type out current word. */}
       <div className="flex gap-2.5 w-full">
@@ -118,7 +129,13 @@ const Main = () => {
           <IoMdRefresh />
         </button>
       </div>
-      <Timer seconds={seconds} setSeconds={setSeconds} onTimeUp={onTimeUp} wordCount={wordCount} isStarted={isStarted} />
+      <Timer
+        seconds={seconds}
+        setSeconds={setSeconds}
+        onTimeUp={onTimeUp}
+        wordCount={wordCount}
+        isStarted={isStarted}
+      />
     </div>
   );
 };

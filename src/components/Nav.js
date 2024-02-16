@@ -19,7 +19,15 @@ const Nav = () => {
           </h1>
           <div className="gap-1 font-semibold flex mt-5">
             {navLinks.map((link, index) => (
-              <Link key={index} className={`px-5 py-2.5 rounded-full font-medium transition ${location.pathname === link.path ? "bg-white/5" : "hover:bg-white/5 bg-transparent "}`} to={link.path}>
+              <Link
+                key={index}
+                className={`px-5 py-2.5 rounded-full font-medium transition ${
+                  location.pathname === link.path
+                    ? "bg-white/5"
+                    : "hover:bg-white/5 bg-transparent "
+                }`}
+                to={link.path}
+              >
                 {link.text}
               </Link>
             ))}
